@@ -12,6 +12,7 @@ import {
 } from "../../../components/dialog";
 import InputText from "../../../components/input-text";
 import SelectCheckboxIlustration from "../../../assets/images/select-checkbox.svg?react";
+import Skeleton from "../../../components/skeleton";
 
 interface AlbumNewDialogProps {
   trigger: React.ReactNode;
@@ -29,7 +30,19 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
           <InputText placeholder="Adicione um título" />
           <div className="space-y-3">
             <Text variant="label-small">Fotos Cadastradas</Text>
-            {isLoading && photos.length === 0 && (
+
+            {isLoading && (
+              <div>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <Skeleton
+                    key={`photo-loading-${index}`}
+                    className="w-20 h-20 rounded"
+                  />
+                ))}
+              </div>
+            )}
+
+            {!isLoading && photos.length === 0 && (
               <div className="w-full flex flex-col justify-center items-center gap-3">
                 <SelectCheckboxIlustration />
                 <Text variant="paragraph-medium" className="text-center">
